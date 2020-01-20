@@ -115,6 +115,11 @@ class Dataset:
         return pd.concat(train_data), pd.concat(train_labels), pd.concat(test_data), pd.concat(test_labels), \
                pd.concat(test_segments)
 
+    def __repr__(self):
+        print("raw",self.raw)
+        print("segmented", self.segmented)
+        print("folds", self.folds)
+
 
 def Bulling_dataloader(SETTINGS):
     Bulling = Dataset()
