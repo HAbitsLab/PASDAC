@@ -1,0 +1,1 @@
+__all__ = ['smoothing', 'splitIntoRepetitions', 'standardizeData'] #function name listed
