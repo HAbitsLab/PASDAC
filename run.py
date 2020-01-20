@@ -8,12 +8,13 @@ import pandas as pd
 # SET SETTINGS
 ##########################################################################################
 setting = SETTING('Data2R', 'Output', '/feature')
-setting.set_SAMPLINGRATE(32)  # sampling rate
+setting.set_SAMPLINGRATE(25)  # sampling rate
 setting.set_SUBJECT(1)
 setting.set_SUBJECT_LIST([1, 2])
 setting.set_SUBJECT_TOTAL(2)
 setting.set_DATASET('gesture')
 setting.set_SMOOTHING_TECHNIQUE(method='boxcar', winsize=30)
+setting.SEGMENTATION_TECHNIQUE = {'method':'slidingWindow','winSizeSecond':2,'stepSizeSecond':0.1}
 setting.set_FEATURE_TYPE('VerySimple')
 setting.set_SAVE(0)
 setting.set_PLOT(1)

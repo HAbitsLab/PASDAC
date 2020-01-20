@@ -80,6 +80,8 @@ class Dataset:
         """
 
         """
+        self.folds["train"] = []
+        self.folds["test"] = []
         if fold_type == "pi":
             self.folds["type"] = "pi"
             for p in self.segmented.keys():
@@ -116,9 +118,8 @@ class Dataset:
                pd.concat(test_segments)
 
     def __repr__(self):
-        print("raw",self.raw)
-        print("segmented", self.segmented)
-        print("folds", self.folds)
+        msg = "raw\nsegmented\nfolds"
+        return msg
 
 
 def Bulling_dataloader(SETTINGS):
