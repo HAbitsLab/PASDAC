@@ -1,6 +1,7 @@
 import os, sys
 import numpy as np
 import pandas as pd
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'Tools'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'Tools/labels'))
 from label2OneHotLabel import label2OneHotLabel
@@ -50,7 +51,7 @@ def classification(trainData, trainLabels, testData, SETTINGS):
 
         result = model.predict(testData)
         proba = model.predict_proba(testData)
-        proba = fillinMatrix(proba, trainLabelsUnqArr-1, nClass)
+        proba = fillinMatrix(proba, trainLabelsUnqArr - 1, nClass)
 
         labelDf = pd.DataFrame(data=result, columns=['Label'])
         try:
@@ -58,11 +59,11 @@ def classification(trainData, trainLabels, testData, SETTINGS):
         except ValueError:
 
             if verbose >= 2:
-                print ('Label:')
-                print (labelDf)
-                print ('proba:')
-                print (proba)
-                print (proba.shape)
+                print('Label:')
+                print(labelDf)
+                print('proba:')
+                print(proba)
+                print(proba.shape)
 
             raise ValueError(
                 "Function classification does not implement properly")

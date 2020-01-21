@@ -8,13 +8,11 @@ import pandas as pd
 # SET SETTINGS
 ##########################################################################################
 setting = SETTING('Data2R', 'Output', '/feature')
-setting.set_SAMPLINGRATE(25)  # sampling rate
-setting.set_SUBJECT(1)
+setting.set_SAMPLINGRATE(32)  # sampling rate
 setting.set_SUBJECT_LIST([1, 2])
-setting.set_SUBJECT_TOTAL(2)
 setting.set_DATASET('gesture')
 setting.set_SMOOTHING_TECHNIQUE(method='boxcar', winsize=30)
-setting.SEGMENTATION_TECHNIQUE = {'method':'slidingWindow','winSizeSecond':2,'stepSizeSecond':0.1}
+setting.SEGMENTATION_TECHNIQUE = {'method': 'slidingWindow', 'winSizeSecond': 1, 'stepSizeSecond': 0.1}
 setting.set_FEATURE_TYPE('VerySimple')
 setting.set_SAVE(0)
 setting.set_PLOT(1)
@@ -57,7 +55,7 @@ for p in participants:
         labelsSegmentationRepetitions.append(labelsSegmentations)
 
         ################### (3) Feature extraction ###################
-        feat, fType, fDescr = feature_extraction_step(data, segmentations[rep], setting)
+        feat, fDescr = feature_extraction_step(data, segmentations[rep], setting)
         features.append(feat)
 
     # Saving segmented feature data and labels for each participants
@@ -65,7 +63,6 @@ for p in participants:
     dataset.set_participant_segmentation_labels(p, labelsSegmentationRepetitions)
     dataset.set_participant_segments_features(p, features)
 
-# todo: what is this offset for
 offset = 0
 # creating the cross validation eval related metrics
 cv = {
@@ -74,8 +71,6 @@ cv = {
     "testLabels": [],
     "testSegmentation": []
 }
-
-
 
 ##########################################################################################
 # Model Training and Testing
@@ -98,7 +93,6 @@ for iFold in range(setting.FOLDS):
     trainingData, trainingLabels, testData, testLabels, testSegmentation = get_fold_data_step(iFold, dataset, setting)
 
     ####################  (5) Fold classification ####################
-    # todo: make the headers of scores and probas the same.
     scores, probas = fold_classification_step(trainingData, trainingLabels, testData, setting)
 
     # saving eval scores this fold
@@ -106,7 +100,6 @@ for iFold in range(setting.FOLDS):
     cv["scores"] += [scores]
     cv["probas"] += [probas]
 
-    # todo: check
     if len(cv["testSegmentation"]) == 0:
         cv["testSegmentation"] += [testSegmentation]
     else:

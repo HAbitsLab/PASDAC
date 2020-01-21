@@ -13,7 +13,7 @@ class SETTING(object):
         self.FEATURE_SELECTION_OPTIONS = 10 # number of features to select
         self.SAVE = 0
         self.PLOT = 1
-        self.VERBOSE_LEVEL = 2
+        self.VERBOSE_LEVEL = 0
         self.FUSION_TYPE = 'early'
         self.CLASSIFIER = 'knnVoting'
         self.CLASSIFIER_OPTIONS = 'knnVoting'
@@ -24,14 +24,9 @@ class SETTING(object):
     def set_SAMPLINGRATE(self, SAMPLINGRATE):
         self.SAMPLINGRATE = SAMPLINGRATE  # sampling rate
 
-    def set_SUBJECT(self, SUBJECT):
-        self.SUBJECT = SUBJECT  # which subject to use, possible values: 1, 2
-
-    def set_SUBJECT_TOTAL(self, SUBJECT_TOTAL):
-        self.SUBJECT_TOTAL = SUBJECT_TOTAL  # total number of subjects
-
     def set_SUBJECT_LIST(self, SUBJECT_LIST):
         self.SUBJECT_LIST = SUBJECT_LIST  # total number of subjects
+        self.SUBJECT_TOTAL = len(SUBJECT_LIST)
 
     def set_DATASET(self, DATASET):
         self.DATASET = DATASET  # which dataset to use, possible values: walk, gesture

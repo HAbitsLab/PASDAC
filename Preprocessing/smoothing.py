@@ -47,7 +47,6 @@ def smoothing(dataDf, kwargs):
         # Looping through columns to apply the snoothing method for each column
         for c in range(arr.shape[1]):
             col = arr[:, c]
-            # TODO: add padding
 
             # when winsize is even, int(winsize/2) is bigger than int((winsize-1)/2) by 1
             # when winsize is odd, int(winsize/2) is the same as int((winsize-1)/2)

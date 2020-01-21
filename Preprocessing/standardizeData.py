@@ -16,9 +16,6 @@ def standardizeData(trainingData, testData, verbose):
         testZsc:                dataFrame
 
     """
-
-    # TODO: Comment in the following 2 lines and implement training set and test set z-normalization 
-    # 		according to requirement
     
 
     if verbose >= 2:
@@ -43,8 +40,7 @@ def standardizeData(trainingData, testData, verbose):
         ind = np.where((trainingStd==0))[0]
         for i in ind:
             trainingZsc.iloc[:,i] = trainingData.iloc[:,i] - trainingMean[i]
-            testZsc.iloc[:,i] = testData.iloc[:,i] - trainingMean[i]  # todo: check with shibo why subtract with train mean
-
+            testZsc.iloc[:,i] = testData.iloc[:,i] - trainingMean[i]
 
 
     return trainingZsc, testZsc

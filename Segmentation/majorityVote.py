@@ -20,6 +20,6 @@ def majorityVote(votes):
 if __name__ == "__main__":
 
     import numpy as np
-    votes = np.array([1,1,3,4,2,2,2,2,2,1,1,0])
+    votes = np.array([1,1,1,2,2,2])
     print((majorityVote(votes)))
 

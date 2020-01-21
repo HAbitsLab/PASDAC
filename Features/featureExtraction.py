@@ -80,7 +80,7 @@ def featureExtraction(data, segmentations, featureType, verbose):
         featuresDf = pd.DataFrame(data = allfeats, columns = fType)
 
     
-    return featuresDf, fType, fDescr
+    return featuresDf, fDescr
 
 
 if __name__ == "__main__":

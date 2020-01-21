@@ -75,8 +75,7 @@ class Dataset:
         """ """
         return self.segmented[p]["features"]
 
-    #todo change to eval type
-    def set_folds(self, fold_type="pi"):
+    def set_eval_type(self, fold_type="pi"):
         """
 
         """

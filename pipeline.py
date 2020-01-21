@@ -119,16 +119,15 @@ def feature_extraction_step(data, segmentation, SETTINGS):
         name of the functions used for extracting feature
     """
 
-    #todo: remove fType because we can git it from feat column
-    feat, fType, fDescr = featureExtraction(data, segmentation, SETTINGS.FEATURE_TYPE, SETTINGS.VERBOSE_LEVEL)
-    return feat, fType, fDescr
+    feat, fDescr = featureExtraction(data, segmentation, SETTINGS.FEATURE_TYPE, SETTINGS.VERBOSE_LEVEL)
+    return feat, fDescr
 
 
 def prepare_folds_step(Dataset,SETTINGS):
     """
 
     """
-    subfolds = Dataset.set_folds(fold_type=SETTINGS.EVALUATION)
+    subfolds = Dataset.set_eval_type(fold_type=SETTINGS.EVALUATION)
     SETTINGS.FOLDS = len(subfolds["train"])
 
     return subfolds
@@ -151,7 +150,6 @@ def fold_classification_step(trainingData, trainingLabels, testData,SETTINGS):
     """
 
     """
-    # todo: make the headers of scores and probas the same.
     scores, probas = classification(trainingData, trainingLabels, testData, SETTINGS)
 
     return scores, probas
@@ -161,16 +159,13 @@ def evaluation_step(cv,SETTINGS):
 
     """
     # prediction one hot representation matrix,  point by point
-    # todo: check
     scoresTimeseries = segmentsToTimeseries(cv["testSegmentation"], cv["scores"], -float('Inf'))
     labelsTimeseries = segmentsToTimeseries(cv["testSegmentation"], cv["testLabels"], -float('Inf'))
 
     #  (4.5) Convert scores into prediction
-    # todo: check
     finalPredTimeseries = decision(scoresTimeseries)
     finalPredTimeseries = finalPredTimeseries + 1
 
-    # todo: check
     confusion, scoreEval = evaluation(finalPredTimeseries, labelsTimeseries, scoresTimeseries, SETTINGS)
 
     return confusion, scoreEval, scoresTimeseries, labelsTimeseries, finalPredTimeseries

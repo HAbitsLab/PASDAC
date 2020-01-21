@@ -37,6 +37,11 @@ def Bulling_dataloader(SETTINGS):
 
         data, point_labels, labels, nRepetitions = splitIntoRepetitions(data, labels, label2segments(labels))
 
+        for i in range(len(data)):
+            data[i] = data[i].reset_index(drop=True)
+            labels[i] = labels[i].reset_index(drop=True)
+            labels[i] = labels[i].drop(columns=["Length", "Count"])
+
         Bulling.set_participant_raw_data(str(iSubject), data)
         Bulling.set_participant_raw_labels(str(iSubject), labels)
 
