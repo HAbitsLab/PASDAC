@@ -41,7 +41,17 @@ class Dataset:
         return self.raw[p]["data"]
 
     def set_participant_raw_labels(self, p, raw_labels):
-        """ Adding a participant raw labels. """
+        """ Adding a participant raw labels for all reps. todo: add more details about the parameters
+
+        Parameters
+        ----------
+        p : string
+            The ...
+
+        raw_labels :
+
+
+        """
         self.raw[p]["labels"] = raw_labels
 
     def get_participant_raw_labels(self, p):
@@ -121,6 +131,7 @@ class Dataset:
         return msg
 
 
+####### Example #######
 def Bulling_dataloader(SETTINGS):
     Bulling = Dataset()
 
