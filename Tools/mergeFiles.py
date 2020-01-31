@@ -31,6 +31,7 @@ def mergeIMUFiles(files,output):
 
     #write it to the file in data2R folder
     mergedDataFrame.to_csv (output, index = None, header=True)
+    return mergedDataFrame
 
 
 if __name__=='__main__':
