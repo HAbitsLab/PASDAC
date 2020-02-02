@@ -12,12 +12,14 @@ def Tutorial2_dataloader(SETTINGS):
 
     ClassActivity = Dataset()
 
-    dataAll =[]
-    labelsAll = []
 
-    for rep in range(SETTINGS.FOLDS):
-        dataFileName = SETTINGS.PATH_DATA + '/Repetition' + str(rep+1) + '_' + SETTINGS.DATASET + '_data.csv'
-        labelsFileName = SETTINGS.PATH_DATA + '/Repetition' + str(rep+1) + '_' + SETTINGS.DATASET + '_labels.csv'
+
+
+    for rep in (SETTINGS.SUBJECT_LIST):
+        dataAll = []
+        labelsAll = []
+        dataFileName = SETTINGS.PATH_DATA + '/Repetition' + str(rep) + '_' + SETTINGS.DATASET + '_data.csv'
+        labelsFileName = SETTINGS.PATH_DATA + '/Repetition' + str(rep) + '_' + SETTINGS.DATASET + '_labels.csv'
 
         print(dataFileName)
         print(labelsFileName)
@@ -39,8 +41,8 @@ def Tutorial2_dataloader(SETTINGS):
         else:
             print('prepareFoldData:fileDoesNotExist, ' + labelsFileName + ' does not exist in the file system.')
 
-    ClassActivity.set_participant_raw_data(str(1), dataAll)
-    ClassActivity.set_participant_raw_labels(str(1), labelsAll)
+        ClassActivity.set_participant_raw_data(str(rep), dataAll)
+        ClassActivity.set_participant_raw_labels(str(rep), labelsAll)
 
     return ClassActivity
 
@@ -77,6 +79,8 @@ def segment(data,labels):
     newDF = pd.DataFrame([[startOfLabel, index - 1, lastLabel]], columns=['Start', 'End', 'Label'])
     labelDF = pd.concat([labelDF, newDF], ignore_index=True)
 
+    #print(newDF,labelDF)
+
     #
     #
     # for index, row in labels.iterrows():
@@ -95,10 +99,11 @@ if __name__=='__main__':
     setting.SENSOR_PLACEMENT = ['Pant pocket Right']
     setting.CLASSES = len(setting.CLASSLABELS)
     setting.FOLDS = 2
+    setting.set_SUBJECT_LIST([1, 2])
     setting.SENSORS_AVAILABLE = ['date', 'X (mg)', 'Y (mg)', 'Z (mg)', 'X (dps)', 'Y (dps)', 'Z (dps)', 'X (mGa)',
                                  'Z (mGa)', 'Z (mGa)']
     dataset = Tutorial2_dataloader(setting)
-    raw_data = dataset.raw["1"]["data"][1]
+    raw_data = len(dataset.raw['1']['data'][0])
     print(raw_data)
 
 
