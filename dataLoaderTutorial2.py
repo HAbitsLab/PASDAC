@@ -11,7 +11,7 @@ from Dataset.Dataset import Dataset
 def Tutorial2_dataloader(SETTINGS):
 
     ClassActivity = Dataset()
-
+    activityLabelList = {}
 
 
 
@@ -33,7 +33,7 @@ def Tutorial2_dataloader(SETTINGS):
         # import label file
         if os.path.isfile(labelsFileName):
             labels = pd.read_csv(labelsFileName, names=[ 'round','activity','start','end','label'])
-            labelsSegmented = segment(pd.read_csv(dataFileName),labels)
+            labelsSegmented,activityLabelList = segment(pd.read_csv(dataFileName),labels,activityLabelList)
             dataAll.append(data)
             labelsAll.append(labelsSegmented)
 
@@ -43,15 +43,21 @@ def Tutorial2_dataloader(SETTINGS):
 
         ClassActivity.set_participant_raw_data(str(rep), dataAll)
         ClassActivity.set_participant_raw_labels(str(rep), labelsAll)
+        #print(labelsAll)
 
+
+    print(activityLabelList)
     return ClassActivity
 
 
-def segment(data,labels):
+def segment(data,labels,allClasses):
     activityTime = data['Date']
     startOfExp = activityTime.iloc[0] - labels.loc[labels['label'] == 'starExp']['start'][0]
     allUnique = labels.label.unique()
 
+    for classes in allUnique:
+        if classes not in allClasses:
+            allClasses[classes]=len(allClasses)
 
     labelDF = pd.DataFrame(columns = ['Start','End','Label'])
 
@@ -60,11 +66,12 @@ def segment(data,labels):
     for index, row in timeLabelDF.iterrows():
         for index2, row2 in labels.iterrows():
             if row2['start'] < row['Date'] - startOfExp and row2['end'] > row['Date'] - startOfExp:
-                new_df = pd.DataFrame({'label': np.where(allUnique == row2['label'])[0]}, index=[index])
+                new_df = pd.DataFrame({'label': allClasses[row2['label']]}, index=[index])
                 tempDF.update(new_df)
 
                 break
     timeLabelDF.update(tempDF)
+
     lastLabel = 0
     startOfLabel = 1
     for index, row in timeLabelDF.iterrows():
@@ -89,7 +96,7 @@ def segment(data,labels):
 
 
     #print(labelDF)
-    return labelDF
+    return labelDF,allClasses
 
 if __name__=='__main__':
     setting = SETTING('Data2R', 'Output', '/feature')
@@ -103,7 +110,7 @@ if __name__=='__main__':
     setting.SENSORS_AVAILABLE = ['date', 'X (mg)', 'Y (mg)', 'Z (mg)', 'X (dps)', 'Y (dps)', 'Z (dps)', 'X (mGa)',
                                  'Z (mGa)', 'Z (mGa)']
     dataset = Tutorial2_dataloader(setting)
-    raw_data = len(dataset.raw['1']['data'][0])
-    print(raw_data)
+    raw_data = len(dataset.raw['1']['labels'][0])
+    #print(raw_data)
 
 
