@@ -52,7 +52,7 @@ def Tutorial2_dataloader(SETTINGS):
 
 def segment(data,labels,allClasses):
     activityTime = data['Date']
-    startOfExp = activityTime.iloc[0] - labels.loc[labels['label'] == 'starExp']['start'][0]
+    startOfExp = activityTime.iloc[0] - labels.iloc[0][2] #labels.loc[labels['label'] == 'starExp']['start'][0]
     allUnique = labels.label.unique()
 
     for classes in allUnique:
