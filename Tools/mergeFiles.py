@@ -25,7 +25,7 @@ def mergeIMUFiles(files,output):
 
 
     # convert human readable time to epoch time
-    utc_time =  pd.to_datetime(mergedDataFrame['Date'].values,format='%d/%m/%Y %H:%M:%S.%f').tz_localize(local_tz)#infer_datetime_format=True)# format='%d/%m/%Y %H:%M:%S.%fZ')#,                                 "%d-%m-%YT%H:%M:%S.%fZ")
+    utc_time =  pd.to_datetime(mergedDataFrame['Date'].values,format='%d/%m/%Y %H:%M:%S.%f').tz_localize('US/Central')#infer_datetime_format=True)# format='%d/%m/%Y %H:%M:%S.%fZ')#,                                 "%d-%m-%YT%H:%M:%S.%fZ")
     pd.DatetimeIndex(utc_time)
     utc_time = utc_time.astype(np.int64) / int(1e6)
     print(utc_time[4])
