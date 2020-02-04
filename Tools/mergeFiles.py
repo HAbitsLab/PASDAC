@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import time
+from tzlocal import get_localzone
+local_tz = get_localzone()
 
 def mergeIMUFiles(files,output):
     pd.set_option('display.max_columns', None)
@@ -23,7 +25,7 @@ def mergeIMUFiles(files,output):
 
 
     # convert human readable time to epoch time
-    utc_time =  pd.to_datetime(mergedDataFrame['Date'],format='%d/%m/%Y %H:%M:%S.%f' ,infer_datetime_format=True)# format='%d/%m/%Y %H:%M:%S.%fZ')#,                                 "%d-%m-%YT%H:%M:%S.%fZ")
+    utc_time =  pd.to_datetime(mergedDataFrame['Date'].values,format='%d/%m/%Y %H:%M:%S.%f').tz_localize(local_tz)#infer_datetime_format=True)# format='%d/%m/%Y %H:%M:%S.%fZ')#,                                 "%d-%m-%YT%H:%M:%S.%fZ")
     pd.DatetimeIndex(utc_time)
     utc_time = utc_time.astype(np.int64) / int(1e6)
     print(utc_time[4])
@@ -36,5 +38,5 @@ def mergeIMUFiles(files,output):
 
 if __name__=='__main__':
     output = '../Data2R/Repetition1_classActivity_data.csv'
-    files = ['D:\\temp\\20200203_184712_Accelerometer.csv','D:\\temp\\20200203_184712_Gyroscope.csv','D:\\temp\\20200203_184712_Magnetometer.csv']
+    files = ['D:\\temp\\20200203_194923_Accelerometer.csv','D:\\temp\\20200203_194923_Gyroscope.csv','D:\\temp\\20200203_194923_Magnetometer.csv']
     print(mergeIMUFiles(files,output))
