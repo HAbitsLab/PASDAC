@@ -7,10 +7,10 @@ class SETTING(object):
         self.PATH_OUTPUT_FEATURES = self.PATH_OUTPUT + field3
         self.SAMPLINGRATE = 32
         self.SMOOTHING_TECHNIQUE = 'none'
-        self.SEGMENTATION_TECHNIQUE = {'method':'slidingWindow','winSizeSecond':1,'stepSizeSecond':0.1}
+        self.SEGMENTATION_TECHNIQUE = {'method': 'slidingWindow', 'winSizeSecond': 1, 'stepSizeSecond': 0.1}
         self.FEATURE_TYPE = 'VerySimple'
         self.FEATURE_SELECTION = 'none'
-        self.FEATURE_SELECTION_OPTIONS = 10 # number of features to select
+        self.FEATURE_SELECTION_OPTIONS = 10  # number of features to select
         self.SAVE = 0
         self.PLOT = 1
         self.VERBOSE_LEVEL = 0
@@ -18,8 +18,6 @@ class SETTING(object):
         self.CLASSIFIER = 'knnVoting'
         self.CLASSIFIER_OPTIONS = 'knnVoting'
         self.EVALUATION = 'pi'
-
-
 
     def set_SAMPLINGRATE(self, SAMPLINGRATE):
         self.SAMPLINGRATE = SAMPLINGRATE  # sampling rate
@@ -32,12 +30,24 @@ class SETTING(object):
         self.DATASET = DATASET  # which dataset to use, possible values: walk, gesture
 
         if self.DATASET == 'gesture':
-            self.CLASSLABELS = ['NULL', 'Open window', 'Drink', 'Water plant', 'Close window', 'Cut', 'Chop', 'Stir', 'Book', 'Forehand', 'Backhand','Smash']
+            self.CLASSLABELS = ['NULL', 'Open window', 'Drink', 'Water plant', 'Close window', 'Cut', 'Chop', 'Stir',
+                                'Book', 'Forehand', 'Backhand', 'Smash']
             self.SENSOR_PLACEMENT = ['Right hand', 'Right lower arm', 'Right upper arm']
-            self.CLASSES = len(self.CLASSLABELS) # number of classes
+            self.CLASSES = len(self.CLASSLABELS)  # number of classes
             # number of folds, this is ruled by the data set/test protocol, in splitIntoRepetitions.py file, this is set automatically from the dataset. Change FOLDS here without changing the dataset will not really change the FOLDS.
-            self.FOLDS = 2 #26 for /Data, 2 for /Data2R
-            self.SENSORS_AVAILABLE = ['acc_1_x', 'acc_1_y', 'acc_1_z','gyr_1_x', 'gyr_1_y', 'acc_2_x', 'acc_2_y', 'acc_2_z', 'gyr_2_x', 'gyr_2_y','acc_3_x', 'acc_3_y', 'acc_3_z', 'gyr_3_x', 'gyr_3_y'] # sensors available, one entry for each column of the data matrix
+            self.FOLDS = 2  # 26 for /Data, 2 for /Data2R
+            self.SENSORS_AVAILABLE = ['acc_1_x', 'acc_1_y', 'acc_1_z', 'gyr_1_x', 'gyr_1_y', 'acc_2_x', 'acc_2_y',
+                                      'acc_2_z', 'gyr_2_x', 'gyr_2_y', 'acc_3_x', 'acc_3_y', 'acc_3_z', 'gyr_3_x',
+                                      'gyr_3_y']  # sensors available, one entry for each column of the data matrix
+
+        if self.DATASET == 'chew':
+            self.CLASSLABELS = ['NULL', 'chewing', 'not chewing']
+            self.SENSOR_PLACEMENT = ['neck']
+            self.CLASSES = len(self.CLASSLABELS)  # number of classes
+            # number of folds, this is ruled by the data set/test protocol, in splitIntoRepetitions.py file, this is set automatically from the dataset. Change FOLDS here without changing the dataset will not really change the FOLDS.
+            self.FOLDS = 2  # 26 for /Data, 2 for /Data2R
+            self.SENSORS_AVAILABLE = ["proximity", "ambient", "leanForward", "qW", "qX", "qY", "qZ", "aX", "aY", "aZ",
+                                      "power", "cal"]  # sensors available, one entry for each column of the data matrix
 
     def set_SMOOTHING_TECHNIQUE(self, **kwargs):
         self.SMOOTHING_TECHNIQUE = kwargs
@@ -52,7 +62,7 @@ class SETTING(object):
         self.SAVE = SAVE  # (de)activate saving of variables
 
     def set_PLOT(self, PLOT):
-        self.PLOT = PLOT  # (de)activate plot 
+        self.PLOT = PLOT  # (de)activate plot
 
     def set_VERBOSE_LEVEL(self, VERBOSE_LEVEL):
         self.VERBOSE_LEVEL = VERBOSE_LEVEL  # verbose level for debug messages, possible values: 0 (quiet), 1 (results), 2 (processing steps)
@@ -68,12 +78,12 @@ class SETTING(object):
 
     def set_CLASSIFIER(self, CLASSIFIER):
         self.CLASSIFIER = 'knnVoting'  # classifier to use, possible values: knnVoting, NaiveBayes, SVM, liblinear, SVMlight, DA, cHMM, jointboosting
-    
+
     def set_CLASSIFIER_OPTIONS(self, CLASSIFIER):
-        if CLASSIFIER == 'knnVoting': # main parameter: number of nearest neighbours (k), default 5
+        if CLASSIFIER == 'knnVoting':  # main parameter: number of nearest neighbours (k), default 5
             self.CLASSIFIER_OPTIONS_TRAINING = []
-            self.CLASSIFIER_OPTIONS_TESTING = ['k', 1] 
+            self.CLASSIFIER_OPTIONS_TESTING = ['k', 1]
 
     def set_EVALUATION(self, EVALUATION):
         self.EVALUATION = EVALUATION  # type of evaluation, possible values: pd (person-dependent), pi (person-independent, leave-one-person-out), loio (leave-one-instance-out)
-    
+

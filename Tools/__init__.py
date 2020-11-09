@@ -1,1 +1,1 @@
-__all__ = ['secondsToSamples', 'array2Dataframe', 'find', 'lenArrayOfDataframe', 'setDiff'] #function name listed
+__all__ = ['secondsToSamples', 'array2Dataframe', 'find', 'lenArrayOfDataframe', 'setDiff', 'label_time_series'] #function name listed
