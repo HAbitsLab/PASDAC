@@ -53,8 +53,8 @@ def label_time_series(subject, labels, raw_df, inclusion=None):
         os.mkdir(outdir)
 
     # output to csv.
-    #raw_df.to_csv('Necklace/{}_gesture_labels.csv'.format(subject), columns=header, header=None, index=False)
-    #raw_df.to_csv('Necklace/{}_raw.csv'.format(subject), index=False)
+    raw_df.to_csv(os.path.join(outdir, '{}_gesture_labels.csv'.format(subject)), columns=header, header=None, index=False)
+    raw_df.to_csv(os.path.join(outdir, '{}_raw.csv'.format(subject)), index=False)
 
     # save only inclusion dataframe is csv
     return raw_df, raw_df["Label"]
