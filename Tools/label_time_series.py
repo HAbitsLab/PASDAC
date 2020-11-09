@@ -35,7 +35,7 @@ def label_time_series(subject, labels, raw_df, inclusion=None):
             included_df.append(raw_df.loc[mask])
         raw_df = pd.concat(included_df, ignore_index=True)
 
-    raw_df['Label'] = 0
+    raw_df['Label'] = 1
     # maybe -1 as unknown label.
     # TODO how to handle unknown
 
@@ -44,7 +44,7 @@ def label_time_series(subject, labels, raw_df, inclusion=None):
     # apply mask to df based on chewing labels
     for index, row in labels.iterrows():
         mask = (raw_df['Time'] >= row['start']) & (raw_df['Time'] <= row['end'])  # mask orginal dataframe to chewing labels
-        raw_df.loc[mask, 'Label'] = 1  # set chewing label on df
+        raw_df.loc[mask, 'Label'] = 2  # set chewing label on df
 
     # save label column as csv
     header = ["Label"]
