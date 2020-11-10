@@ -1,1 +1,1 @@
-__all__ = ['calculateFeaturesSimple','featureExtraction', 'calculateFeaturesVerySimple'] #function name listed
+__all__ = ['calculateFeaturesSimple','featureExtraction', 'calculateFeaturesVerySimple', 'calculateNecklaceFeatures'] #function name listed
