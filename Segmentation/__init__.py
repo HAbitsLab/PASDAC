@@ -1,1 +1,1 @@
-__all__ = ['slidingWindow','assignLabels','detectPeaks','genEnergy','majorityVote','segment','segmentSlidingWindow', 'segmentsToTimeseries'] #function name listed
+__all__ = ['slidingWindow','assignLabels','detectPeaks','genEnergy','majorityVote','segment','segmentSlidingWindow', 'segmentsToTimeseries', 'periodic'] #function name listed
