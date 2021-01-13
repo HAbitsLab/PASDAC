@@ -26,7 +26,7 @@ def smoothing(dataDf, kwargs):
     # Check if there is the user set a method for smoothing. If no method is provided then ust return the DataFrame
     if 'method' in userSetArgs:
         method = userSetArgs["method"]
-        print('Smoothing method: ', method)
+        # print('Smoothing method: ', method)
     else:
         print("No smoothing method applied")
         return dataDf

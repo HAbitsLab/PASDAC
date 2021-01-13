@@ -43,15 +43,17 @@ def segments2label(segments):
     return labeling
 
 
-def assignLabels(raw_labels, segmentation):
+def assignLabels(labels, segmentation, raw=True, method='majorityVote'):
     """Assign labels to segmentations
 
     Parameters
     ----------
-        raw_labels : dataFrame
-            start and end of raw labels
+        labels : dataFrame
+            start and end of raw labels or labels as timeseries 
         segmentation : dataFrame
             start and end of each segment
+        raw: boolean
+            True of Raw, False if is as timeseries
 
 
     Return
@@ -59,17 +61,27 @@ def assignLabels(raw_labels, segmentation):
         seg_labels : dataFrame
         
     """
-    # Getting the raw label of each point from the raw labels
-    points_labels = segments2label(raw_labels)
+
+    if raw:
+        # Getting the raw label of each point from the raw labels
+        points_labels = segments2label(labels)
+    else:
+        points_labels = labels
     # initializing the seg_labels dataframe with 1 (assuming that 1 is the null value)
-    seg_labels = pd.DataFrame(data=np.ones(len(segmentation)), columns=["Label"],
+    seg_labels = pd.DataFrame(data=np.ones(segmentation.shape[0]), columns=segmentation.columns[2:],
                               dtype=int)  # label 1 is doing nothing by default
 
     # Looping though each segment to get the label
     for i in range(len(segmentation)):
-        # label is assigned based on the majority vote of all the labels of each point in the segment.
-        seg_labels["Label"].iloc[i] = majorityVote(
-            points_labels["Label"].iloc[segmentation["Start"].iloc[i]:segmentation["End"].iloc[i]].values)
+        
+        if method == 'majorityVote':
+            # label is assigned based on the majority vote of all the labels of each point in the segment.
+            seg_labels["Label"].iloc[i] = majorityVote(
+                points_labels["Label"].iloc[segmentation["Start"].iloc[i]:segmentation["End"].iloc[i]].values)
+        elif method == 'any':
+            # In a binary classification a window will be 1 if 1 truth point exist
+            for c in seg_labels.columns:
+                seg_labels[c].iloc[i] = points_labels[c].iloc[segmentation["Start"].iloc[i]:segmentation["End"].iloc[i]].values.max()
 
     return seg_labels
 
