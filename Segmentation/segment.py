@@ -40,7 +40,7 @@ def slidingWindow(data, SETTINGS):
     start_time = 0
     end_time = data.shape[0]
 
-    samplingRate = SETTINGS['SAMPLINGRATE']
+    samplingRate = SETTINGS.SAMPLINGRATE
     winSize = int(round(userSetArgs['winSizeSecond'] * samplingRate))
     stepSize = int(round(userSetArgs['stepSizeSecond'] * samplingRate))
 
