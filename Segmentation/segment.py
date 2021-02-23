@@ -26,7 +26,7 @@ def slidingWindow(data, SETTINGS):
 
     """
 
-    userSetArgs = SETTINGS['SEGMENTATION_TECHNIQUE']
+    userSetArgs = SETTINGS.SEGMENTATION_TECHNIQUE
     winSizeSecond = userSetArgs["winSizeSecond"]
     stepSizeSecond = userSetArgs["stepSizeSecond"]
 
